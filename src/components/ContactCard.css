@@ -114,9 +114,14 @@
 }
 
 .contact-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
   border-color: var(--primary);
+}
+
+.contact-card.list-view:hover {
+  transform: translateX(8px);
+  box-shadow: 0 4px 20px rgba(0, 123, 255, 0.12);
 }
 
 /* Avatar styles moved to ContactAvatar component */
@@ -226,52 +231,76 @@
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
-  .contact-card {
+  /* Grid view - card layout */
+  .contact-card.grid-view {
     padding: 1.25rem;
     border-radius: 10px;
+    min-height: 200px;
   }
   
   .contact-card.grid-view .contact-avatar {
     margin-bottom: 0.75rem;
   }
   
-  .contact-card.list-view {
-    grid-template-columns: 1fr auto;
-    gap: 1rem;
-    padding: 1rem;
-  }
-  
+  /* List view - compact horizontal layout */
   .contact-card.list-view {
     display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    min-height: 70px;
   }
   
   .contact-card.list-view .contact-main-content {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 0.75rem;
+    width: 100%;
   }
   
   .contact-card.list-view .contact-name-section,
   .contact-card.list-view .contact-email-section,
   .contact-card.list-view .contact-phone-section {
+    display: none; /* Hide individual sections on mobile list view */
+  }
+  
+  .contact-card.list-view .contact-info {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0;
+    flex-direction: column;
+    gap: 0.125rem;
+    flex: 1;
+    min-width: 0;
   }
   
-  .contact-card.list-view .section-label {
-    min-width: 60px;
-    margin-bottom: 0;
+  .contact-card.list-view .contact-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
-  .contact-card.list-view .section-label {
-    display: none;
+  .contact-card.list-view .contact-email {
+    font-size: 0.75rem;
+    margin: 0;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
+  .contact-card.list-view .contact-phone {
+    display: none; /* Hide phone on mobile list view to save space */
+  }
+  
+  .contact-card.list-view .contact-tags {
+    margin: 0;
+    max-width: 80px;
+    overflow: hidden;
+  }
+  
+  /* Grid view styles */
   .contact-name {
     font-size: 1rem;
     margin-bottom: 0.4rem;
@@ -289,6 +318,67 @@
   }
   
   .contact-action-btn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .contact-action-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Grid view - smaller cards */
+  .contact-card.grid-view {
+    padding: 1rem;
+    border-radius: 8px;
+    min-height: 180px;
+  }
+  
+  .contact-card.grid-view .contact-avatar {
+    margin-bottom: 0.5rem;
+  }
+  
+  .contact-card.grid-view .contact-name {
+    font-size: 0.95rem;
+    margin-bottom: 0.35rem;
+  }
+  
+  .contact-card.grid-view .contact-email,
+  .contact-card.grid-view .contact-phone {
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  /* List view - even more compact */
+  .contact-card.list-view {
+    padding: 0.625rem 0.875rem;
+    min-height: 60px;
+  }
+  
+  .contact-card.list-view .contact-main-content {
+    gap: 0.625rem;
+  }
+  
+  .contact-card.list-view .contact-name {
+    font-size: 0.85rem;
+  }
+  
+  .contact-card.list-view .contact-email {
+    font-size: 0.7rem;
+  }
+  
+  .contact-card.list-view .contact-tags {
+    max-width: 60px;
+  }
+  
+  .contact-card-actions {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+  
+  .contact-action-btn {
     width: 28px;
     height: 28px;
   }
@@ -296,28 +386,6 @@
   .contact-action-btn svg {
     width: 14px;
     height: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-card {
-    padding: 1rem;
-    border-radius: 8px;
-  }
-  
-  .contact-card .contact-avatar {
-    margin-bottom: 0.5rem;
-  }
-  
-  .contact-name {
-    font-size: 0.95rem;
-    margin-bottom: 0.35rem;
-  }
-  
-  .contact-email,
-  .contact-phone {
-    font-size: 0.8rem;
-    margin-bottom: 0.2rem;
   }
 }
 
@@ -343,20 +411,110 @@
   }
 }
 
-/* Highlight effect when scrolled to via alphabet index */
+/* Elegant highlight effect when scrolled to via alphabet index */
 .contact-card.alphabet-highlight {
-  animation: alphabetHighlight 2s ease-out;
+  animation: alphabetHighlight 1.5s ease-out;
 }
 
-@keyframes alphabetHighlight {
+/* Grid view highlight animation */
+.contact-card.grid-view.alphabet-highlight {
+  animation: alphabetHighlightGrid 1.5s ease-out;
+}
+
+/* List view highlight animation */
+.contact-card.list-view.alphabet-highlight {
+  animation: alphabetHighlightList 1.5s ease-out;
+}
+
+@keyframes alphabetHighlightGrid {
   0% {
-    background: var(--primary);
-    transform: scale(1.02);
-    box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+    transform: translateY(0) scale(1);
+    box-shadow: var(--shadow-sm);
+    z-index: 1;
+  }
+  25% {
+    transform: translateY(-12px) scale(1.04);
+    box-shadow: 0 16px 32px rgba(0, 123, 255, 0.15);
+    z-index: 10;
+  }
+  75% {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0, 123, 255, 0.1);
+    z-index: 10;
   }
   100% {
-    background: var(--bg-primary);
-    transform: scale(1);
+    transform: translateY(0) scale(1);
     box-shadow: var(--shadow-sm);
+    z-index: 1;
+  }
+}
+
+@keyframes alphabetHighlightList {
+  0% {
+    transform: translateX(0) scale(1);
+    box-shadow: var(--shadow-sm);
+    z-index: 1;
+  }
+  25% {
+    transform: translateX(8px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.12);
+    z-index: 10;
+  }
+  75% {
+    transform: translateX(4px) scale(1.01);
+    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.08);
+    z-index: 10;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    box-shadow: var(--shadow-sm);
+    z-index: 1;
+  }
+}
+
+/* Ensure smooth transitions for the highlight effect */
+.contact-card {
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile-optimized highlight animations */
+@media (max-width: 768px) {
+  @keyframes alphabetHighlightGrid {
+    0% {
+      transform: translateY(0) scale(1);
+      box-shadow: var(--shadow-sm);
+    }
+    30% {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 12px 24px rgba(0, 123, 255, 0.12);
+    }
+    70% {
+      transform: translateY(-4px) scale(1.015);
+      box-shadow: 0 8px 16px rgba(0, 123, 255, 0.08);
+    }
+    100% {
+      transform: translateY(0) scale(1);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+  
+  @keyframes alphabetHighlightList {
+    0% {
+      transform: translateX(0) scale(1);
+      box-shadow: var(--shadow-sm);
+    }
+    30% {
+      transform: translateX(6px) scale(1.015);
+      box-shadow: 0 6px 16px rgba(0, 123, 255, 0.1);
+    }
+    70% {
+      transform: translateX(3px) scale(1.008);
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.06);
+    }
+    100% {
+      transform: translateX(0) scale(1);
+      box-shadow: var(--shadow-sm);
+    }
   }
 }

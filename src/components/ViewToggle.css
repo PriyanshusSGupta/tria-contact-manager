@@ -39,15 +39,32 @@
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
+  .view-toggle {
+    padding: 1px;
+  }
+  
   .view-toggle-btn {
-    padding: 0.4rem;
-    min-width: 32px;
-    min-height: 32px;
+    padding: 0.5rem;
+    min-width: 40px;
+    min-height: 40px;
   }
   
   .view-toggle-btn svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .view-toggle-btn {
+    padding: 0.6rem;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .view-toggle-btn svg {
+    width: 18px;
+    height: 18px;
   }
 }
 

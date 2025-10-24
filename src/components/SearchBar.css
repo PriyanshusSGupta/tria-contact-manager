@@ -15,10 +15,16 @@
   border: 2px solid var(--border-primary);
   border-radius: 25px;
   font-size: 1rem;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: var(--bg-primary);
   color: var(--text-primary);
   box-sizing: border-box;
+}
+
+.search-input:hover {
+  border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.08);
+  transform: translateY(-1px);
 }
 
 .search-input::placeholder {
@@ -28,7 +34,8 @@
 .search-input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 0, 123, 255), 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1), 0 4px 12px rgba(0, 123, 255, 0.08);
+  transform: translateY(-1px);
 }
 
 .search-icon {

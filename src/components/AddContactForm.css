@@ -68,6 +68,18 @@ form {
   margin-bottom: 1.5rem;
 }
 
+.image-upload-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  border: 1px solid var(--border-primary);
+}
+
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;

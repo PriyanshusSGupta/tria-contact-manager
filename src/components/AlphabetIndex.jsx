@@ -3,7 +3,7 @@ import './AlphabetIndex.css';
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-function AlphabetIndex({ contacts, onLetterClick, activeLetter }) {
+function AlphabetIndex({ contacts, onLetterClick, activeLetter, onHighlightContact }) {
   // Calculate which letters have contacts
   const availableLetters = useMemo(() => {
     const letterSet = new Set();
@@ -26,9 +26,6 @@ function AlphabetIndex({ contacts, onLetterClick, activeLetter }) {
       // Scroll to the contact element
       const contactElement = document.querySelector(`[data-contact-id="${targetContact.id}"]`);
       if (contactElement) {
-        // Add highlight effect
-        contactElement.classList.add('alphabet-highlight');
-        
         // Use different scroll behavior for mobile
         const isMobile = window.innerWidth <= 768;
         const scrollOptions = {
@@ -40,7 +37,7 @@ function AlphabetIndex({ contacts, onLetterClick, activeLetter }) {
         // Scroll to the contact
         contactElement.scrollIntoView(scrollOptions);
         
-        // Set active letter for visual feedback
+        // Set active letter for visual feedback (briefly)
         onLetterClick(letter);
         
         // Add haptic feedback on mobile devices
@@ -48,11 +45,20 @@ function AlphabetIndex({ contacts, onLetterClick, activeLetter }) {
           navigator.vibrate(50);
         }
         
-        // Remove highlight and clear active letter after animation
+        // Highlight the contact using React state (no direct DOM manipulation)
         setTimeout(() => {
-          contactElement.classList.remove('alphabet-highlight');
+          onHighlightContact(targetContact.id);
+          
+          // Remove highlight after animation
+          setTimeout(() => {
+            onHighlightContact(null);
+          }, 1500);
+        }, 300);
+        
+        // Clear active letter after a short delay
+        setTimeout(() => {
           onLetterClick(null);
-        }, 2000);
+        }, 800);
       }
     }
   };

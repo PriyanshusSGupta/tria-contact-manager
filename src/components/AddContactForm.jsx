@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import './AddContactForm.css';
 import TagSelector from './TagSelector.jsx';
+import ImageUpload from './ImageUpload.jsx';
 
 function AddContactForm({ onAddContact, onCancel, availableTags, onTagsChange, onManageTags }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    tags: []
+    tags: [],
+    image: null
   });
   const [errors, setErrors] = useState({});
 
@@ -48,13 +50,14 @@ function AddContactForm({ onAddContact, onCancel, availableTags, onTagsChange, o
         name: formData.name.trim(),
         email: formData.email.trim(),
         phone: formData.phone.trim(),
-        tags: formData.tags
+        tags: formData.tags,
+        image: formData.image
       };
       
       onAddContact(newContact);
       
       // Reset form
-      setFormData({ name: '', email: '', phone: '', tags: [] });
+      setFormData({ name: '', email: '', phone: '', tags: [], image: null });
       setErrors({});
     }
   };
@@ -70,6 +73,14 @@ function AddContactForm({ onAddContact, onCancel, availableTags, onTagsChange, o
 
   const handleTagsChange = (selectedTags) => {
     setFormData(prev => ({ ...prev, tags: selectedTags }));
+  };
+
+  const handleImageChange = (imageDataUrl) => {
+    setFormData(prev => ({ ...prev, image: imageDataUrl }));
+  };
+
+  const handleImageRemove = () => {
+    setFormData(prev => ({ ...prev, image: null }));
   };
 
   const handleOverlayClick = (e) => {
@@ -96,6 +107,16 @@ function AddContactForm({ onAddContact, onCancel, availableTags, onTagsChange, o
         </div>
         
         <form onSubmit={handleSubmit}>
+          <div className="form-group image-upload-group">
+            <label>Profile Photo</label>
+            <ImageUpload
+              currentImage={formData.image}
+              onImageChange={handleImageChange}
+              onImageRemove={handleImageRemove}
+              name={formData.name}
+            />
+          </div>
+
           <div className="form-group">
             <label htmlFor="name">Full Name *</label>
             <input

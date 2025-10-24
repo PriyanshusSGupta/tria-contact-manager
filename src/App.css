@@ -37,6 +37,12 @@
   margin-bottom: 1.5rem;
 }
 
+.view-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 /* Mobile responsiveness for filters and view toggle */
 @media (max-width: 768px) {
   .filters-and-view {
@@ -44,14 +50,36 @@
     gap: 0.75rem;
     margin-bottom: 1rem;
   }
+  
+  .view-controls {
+    align-self: flex-end;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .filters-and-view {
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .view-controls {
+    align-self: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.25rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-primary);
+  }
 }
 }
 
 .app-header h1 {
   margin: 0;
   color: var(--text-primary);
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
   letter-spacing: -0.025em;
 }
 
@@ -92,7 +120,7 @@
   }
   
   .app-header h1 {
-    font-size: 1.25rem;
+    font-size: var(--font-size-xl);
   }
   
   .header-actions {
@@ -124,7 +152,7 @@
   }
   
   .app-header h1 {
-    font-size: 1.1rem;
+    font-size: var(--font-size-lg);
   }
   
   .app-main {

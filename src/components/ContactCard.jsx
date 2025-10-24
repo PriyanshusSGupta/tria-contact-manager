@@ -1,8 +1,9 @@
 import { memo } from 'react';
 import './ContactCard.css';
 import ContactAvatar from './ContactAvatar.jsx';
+import { Edit2, Trash2 } from 'lucide-react';
 
-function ContactCard({ contact, animationDelay = 0, onEdit, onDelete, availableTags = [], viewMode = 'grid' }) {
+function ContactCard({ contact, animationDelay = 0, onEdit, onDelete, availableTags = [], viewMode = 'grid', isHighlighted = false }) {
 
   const handleEdit = (e) => {
     e.stopPropagation();
@@ -21,7 +22,7 @@ function ContactCard({ contact, animationDelay = 0, onEdit, onDelete, availableT
 
   return (
     <div 
-      className={`contact-card ${viewMode === 'list' ? 'list-view' : 'grid-view'}`}
+      className={`contact-card ${viewMode === 'list' ? 'list-view' : 'grid-view'} ${isHighlighted ? 'alphabet-highlight' : ''}`}
       style={{ animationDelay: `${animationDelay}s` }}
       role="button"
       tabIndex={0}
@@ -36,10 +37,7 @@ function ContactCard({ contact, animationDelay = 0, onEdit, onDelete, availableT
           aria-label={`Edit ${contact.name}`}
           title="Edit contact"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-          </svg>
+          <Edit2 size={16} />
         </button>
         <button 
           className="contact-action-btn delete-btn"
@@ -47,17 +45,16 @@ function ContactCard({ contact, animationDelay = 0, onEdit, onDelete, availableT
           aria-label={`Delete ${contact.name}`}
           title="Delete contact"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <polyline points="3,6 5,6 21,6"></polyline>
-            <path d="M19,6v14a2,2 0 0,1-2,2H7a2,2 0 0,1-2-2V6m3,0V4a2,2 0 0,1,2-2h4a2,2 0 0,1,2,2v2"></path>
-            <line x1="10" y1="11" x2="10" y2="17"></line>
-            <line x1="14" y1="11" x2="14" y2="17"></line>
-          </svg>
+          <Trash2 size={16} />
         </button>
       </div>
       
       <div className="contact-main-content">
-        <ContactAvatar name={contact.name} size={viewMode === 'list' ? 'small' : 'medium'} />
+        <ContactAvatar 
+          name={contact.name} 
+          image={contact.image}
+          size={viewMode === 'list' ? 'small' : 'medium'} 
+        />
         
         {viewMode === 'list' ? (
           <>
@@ -100,4 +97,31 @@ function ContactCard({ contact, animationDelay = 0, onEdit, onDelete, availableT
   );
 }
 
-export default memo(ContactCard);
+// Custom comparison function to prevent unnecessary re-renders
+const areEqual = (prevProps, nextProps) => {
+  // Check if contact data is the same
+  if (prevProps.contact.id !== nextProps.contact.id) return false;
+  if (prevProps.contact.name !== nextProps.contact.name) return false;
+  if (prevProps.contact.email !== nextProps.contact.email) return false;
+  if (prevProps.contact.phone !== nextProps.contact.phone) return false;
+  
+  // Check if view mode changed
+  if (prevProps.viewMode !== nextProps.viewMode) return false;
+  
+  // Check if highlight state changed
+  if (prevProps.isHighlighted !== nextProps.isHighlighted) return false;
+  
+  // Check if animation delay changed (only for initial render)
+  if (prevProps.animationDelay !== nextProps.animationDelay) return false;
+  
+  // Check if tags changed (shallow comparison)
+  const prevTags = prevProps.contact.tags || [];
+  const nextTags = nextProps.contact.tags || [];
+  if (prevTags.length !== nextTags.length) return false;
+  if (prevTags.some((tag, index) => tag !== nextTags[index])) return false;
+  
+  // Functions are stable, so we don't need to check them
+  return true;
+};
+
+export default memo(ContactCard, areEqual);

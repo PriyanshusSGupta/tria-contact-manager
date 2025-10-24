@@ -1,0 +1,253 @@
+.contact-card-skeleton {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  width: 100%;
+  box-sizing: border-box;
+  animation: skeletonFadeIn 0.4s ease-out both;
+  position: relative;
+}
+
+@keyframes skeletonFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Grid view skeleton */
+.contact-card-skeleton.grid-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.skeleton-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.skeleton-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skeleton-name {
+  height: 20px;
+  width: 120px;
+  border-radius: 4px;
+}
+
+.skeleton-email {
+  height: 16px;
+  width: 140px;
+  border-radius: 4px;
+}
+
+.skeleton-phone {
+  height: 16px;
+  width: 100px;
+  border-radius: 4px;
+}
+
+.skeleton-tags {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.skeleton-tag {
+  height: 20px;
+  width: 60px;
+  border-radius: 10px;
+}
+
+/* List view skeleton */
+.contact-card-skeleton.list-view {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+}
+
+.skeleton-avatar-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.skeleton-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.skeleton-label {
+  height: 12px;
+  width: 40px;
+  border-radius: 2px;
+}
+
+.skeleton-name-list {
+  height: 16px;
+  width: 80px;
+  border-radius: 4px;
+}
+
+.skeleton-email-list {
+  height: 16px;
+  width: 120px;
+  border-radius: 4px;
+}
+
+.skeleton-phone-list {
+  height: 16px;
+  width: 90px;
+  border-radius: 4px;
+}
+
+.skeleton-tags-list {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.skeleton-tag-small {
+  height: 16px;
+  width: 50px;
+  border-radius: 8px;
+}
+
+/* Shimmer animation */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 0%,
+    var(--bg-tertiary) 50%,
+    var(--bg-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .contact-card-skeleton {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+  
+  .contact-card-skeleton.list-view {
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .skeleton-avatar {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 0.75rem;
+  }
+  
+  .skeleton-avatar-small {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .skeleton-name {
+    height: 18px;
+    width: 100px;
+  }
+  
+  .skeleton-email,
+  .skeleton-phone {
+    height: 14px;
+  }
+  
+  .skeleton-email {
+    width: 120px;
+  }
+  
+  .skeleton-phone {
+    width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-card-skeleton {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .skeleton-avatar {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .skeleton-avatar-small {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .skeleton-name {
+    height: 16px;
+    width: 90px;
+  }
+  
+  .skeleton-email,
+  .skeleton-phone {
+    height: 12px;
+  }
+  
+  .skeleton-tag {
+    height: 18px;
+    width: 50px;
+  }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    var(--bg-secondary) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer {
+    animation: none;
+    background: var(--bg-tertiary);
+  }
+  
+  .contact-card-skeleton {
+    animation: none;
+  }
+}

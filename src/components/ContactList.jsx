@@ -1,16 +1,34 @@
 import ContactCard from './ContactCard.jsx';
+import EmptyState from './EmptyState.jsx';
 import './ContactList.css';
 
-function ContactList({ contacts, searchTerm, availableTags, onEditContact, onDeleteContact, viewMode = 'grid' }) {
+function ContactList({ 
+  contacts, 
+  searchTerm, 
+  availableTags, 
+  onEditContact, 
+  onDeleteContact, 
+  viewMode = 'grid', 
+  highlightedContactId,
+  onAddContact,
+  onImportContacts 
+}) {
   if (contacts.length === 0) {
-    return (
-      <div className="contact-list-empty">
-        {searchTerm ? (
+    // Show search-specific empty state
+    if (searchTerm) {
+      return (
+        <div className="contact-list-empty">
           <p>No contacts found matching "{searchTerm}"</p>
-        ) : (
-          <p>No contacts available</p>
-        )}
-      </div>
+        </div>
+      );
+    }
+    
+    // Show enhanced empty state for no contacts
+    return (
+      <EmptyState 
+        onAddContact={onAddContact}
+        onImportContacts={onImportContacts}
+      />
     );
   }
 
@@ -32,6 +50,7 @@ function ContactList({ contacts, searchTerm, availableTags, onEditContact, onDel
             onEdit={onEditContact}
             onDelete={onDeleteContact}
             viewMode={viewMode}
+            isHighlighted={highlightedContactId === contact.id}
           />
         ))}
       </div>

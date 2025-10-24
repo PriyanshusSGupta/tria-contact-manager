@@ -1,0 +1,237 @@
+.divider {
+  display: flex;
+  align-items: center;
+}
+
+.divider-horizontal {
+  flex-direction: row;
+  width: 100%;
+}
+
+.divider-vertical {
+  flex-direction: column;
+  height: 100%;
+}
+
+.divider-line {
+  flex: 1;
+  border: none;
+  margin: 0;
+}
+
+/* Horizontal dividers */
+.divider-horizontal .divider-line {
+  height: 1px;
+}
+
+.divider-horizontal.divider-labeled .divider-line {
+  min-width: 20px;
+}
+
+/* Vertical dividers */
+.divider-vertical .divider-line {
+  width: 1px;
+  min-height: 20px;
+}
+
+/* Spacing variants */
+.divider-small {
+  margin: 0.5rem 0;
+}
+
+.divider-medium {
+  margin: 1rem 0;
+}
+
+.divider-large {
+  margin: 1.5rem 0;
+}
+
+.divider-xlarge {
+  margin: 2rem 0;
+}
+
+/* Vertical spacing */
+.divider-vertical.divider-small {
+  margin: 0 0.5rem;
+}
+
+.divider-vertical.divider-medium {
+  margin: 0 1rem;
+}
+
+.divider-vertical.divider-large {
+  margin: 0 1.5rem;
+}
+
+.divider-vertical.divider-xlarge {
+  margin: 0 2rem;
+}
+
+/* Line variants */
+.divider-solid {
+  background: var(--divider-color);
+}
+
+.divider-dashed {
+  background: repeating-linear-gradient(
+    to right,
+    var(--divider-color) 0,
+    var(--divider-color) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+.divider-dotted {
+  background: repeating-linear-gradient(
+    to right,
+    var(--divider-color) 0,
+    var(--divider-color) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+}
+
+.divider-gradient {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--divider-color) 50%,
+    transparent 100%
+  );
+}
+
+/* Vertical line variants */
+.divider-vertical .divider-dashed {
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--divider-color) 0,
+    var(--divider-color) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+.divider-vertical .divider-dotted {
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--divider-color) 0,
+    var(--divider-color) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+}
+
+.divider-vertical .divider-gradient {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--divider-color) 50%,
+    transparent 100%
+  );
+}
+
+/* Color variants */
+.divider-default {
+  --divider-color: var(--border-primary);
+}
+
+.divider-primary {
+  --divider-color: var(--primary);
+}
+
+.divider-secondary {
+  --divider-color: var(--text-secondary);
+}
+
+.divider-success {
+  --divider-color: var(--success);
+}
+
+.divider-error {
+  --divider-color: var(--error);
+}
+
+.divider-light {
+  --divider-color: rgba(255, 255, 255, 0.2);
+}
+
+.divider-dark {
+  --divider-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Label styles */
+.divider-label {
+  padding: 0 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-primary);
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.divider-vertical .divider-label {
+  padding: 1rem 0;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Enhanced shadows for depth */
+.divider-shadow .divider-line {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Animated dividers */
+.divider-animated .divider-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.divider-animated .divider-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .divider-label {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .divider-animated .divider-line::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .divider-animated .divider-line::after {
+    animation: none;
+  }
+}

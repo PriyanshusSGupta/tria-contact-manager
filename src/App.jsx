@@ -1,17 +1,17 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import './App.css'
 import { mockContacts, defaultTags } from './data/mockContacts.js'
 import SearchBar from './components/SearchBar.jsx'
 import ContactList from './components/ContactList.jsx'
-import AddContactButton from './components/AddContactButton.jsx'
+import FloatingActionButton from './components/FloatingActionButton.jsx'
 import AddContactForm from './components/AddContactForm.jsx'
 import EditContactForm from './components/EditContactForm.jsx'
 import ConfirmDialog from './components/ConfirmDialog.jsx'
 import TagFilter from './components/TagFilter.jsx'
 import TagManager from './components/TagManager.jsx'
 import ImportExport from './components/ImportExport.jsx'
-import Notification from './components/Notification.jsx'
-import LoadingSpinner from './components/LoadingSpinner.jsx'
+import ToastContainer from './components/ToastContainer.jsx'
+import LoadingSkeleton from './components/LoadingSkeleton.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 import ThemeToggle from './components/ThemeToggle.jsx'
 import BackgroundSelector from './components/BackgroundSelector.jsx'
@@ -20,6 +20,7 @@ import ViewToggle from './components/ViewToggle.jsx'
 
 import AlphabetIndex from './components/AlphabetIndex.jsx'
 import { useLocalStorage } from './hooks/useLocalStorage.js'
+import { useToast } from './hooks/useToast.js'
 import { needsMigration, migrateData, validateContacts } from './utils/dataMigration.js'
 import { fuzzySearchContacts } from './utils/fuzzySearch.js'
 import { useBackground } from './contexts/BackgroundContext.jsx'
@@ -35,11 +36,14 @@ function App() {
   const [showTagManager, setShowTagManager] = useState(false)
   const [showImportExport, setShowImportExport] = useState(false)
   const [showBackgroundSelector, setShowBackgroundSelector] = useState(false)
-  const [notification, setNotification] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [viewMode, setViewMode] = useLocalStorage('tria-view-mode', 'grid')
   const [sortOrder, setSortOrder] = useLocalStorage('tria-sort-order', 'asc')
   const [selectedLetter, setSelectedLetter] = useState(null)
+  const [highlightedContactId, setHighlightedContactId] = useState(null)
+
+  // Toast notifications
+  const { toasts, success: showSuccess, error: showError, removeToast } = useToast()
 
   // Background context
   const { background, changeBackground } = useBackground()
@@ -80,15 +84,15 @@ function App() {
     initializeApp()
   }, [contacts, setContacts]) // Include dependencies
 
-  const showNotification = (message, type = 'success') => {
-    setNotification({ message, type })
-  }
+  const showNotification = useCallback((message, type = 'success') => {
+    if (type === 'success') {
+      showSuccess(message)
+    } else if (type === 'error') {
+      showError(message)
+    }
+  }, [showSuccess, showError])
 
-  const hideNotification = () => {
-    setNotification(null)
-  }
-
-  const handleAddContact = (newContact) => {
+  const handleAddContact = useCallback((newContact) => {
     try {
       // Add unique ID if not present
       const contactWithId = {
@@ -103,17 +107,17 @@ function App() {
       console.error('Error adding contact:', error)
       showNotification('Failed to add contact. Please try again.', 'error')
     }
-  }
+  }, [setContacts, showNotification])
 
-  const handleCancelAdd = () => {
+  const handleCancelAdd = useCallback(() => {
     setShowAddForm(false)
-  }
+  }, [])
 
-  const handleEditContact = (contact) => {
+  const handleEditContact = useCallback((contact) => {
     setEditingContact(contact)
-  }
+  }, [])
 
-  const handleSaveEdit = (updatedContact) => {
+  const handleSaveEdit = useCallback((updatedContact) => {
     try {
       setContacts(prev => 
         prev.map(contact => 
@@ -126,15 +130,15 @@ function App() {
       console.error('Error updating contact:', error)
       showNotification('Failed to update contact. Please try again.', 'error')
     }
-  }
+  }, [setContacts, showNotification])
 
-  const handleCancelEdit = () => {
+  const handleCancelEdit = useCallback(() => {
     setEditingContact(null)
-  }
+  }, [])
 
-  const handleDeleteContact = (contact) => {
+  const handleDeleteContact = useCallback((contact) => {
     setDeletingContact(contact)
-  }
+  }, [])
 
   const handleConfirmDelete = () => {
     try {
@@ -264,7 +268,7 @@ function App() {
         </header>
         <main className="app-main">
           {isLoading ? (
-            <LoadingSpinner message="Loading your contacts..." />
+            <LoadingSkeleton viewMode={viewMode} />
           ) : (
             <ErrorBoundary>
               <SearchBar 
@@ -293,12 +297,18 @@ function App() {
                 onEditContact={handleEditContact}
                 onDeleteContact={handleDeleteContact}
                 viewMode={viewMode}
+                highlightedContactId={highlightedContactId}
+                onAddContact={() => setShowAddForm(true)}
+                onImportContacts={() => setShowImportExport(true)}
               />
             </ErrorBoundary>
           )}
         </main>
         
-        <AddContactButton onClick={() => setShowAddForm(true)} />
+        <FloatingActionButton 
+          onClick={() => setShowAddForm(!showAddForm)}
+          isActive={showAddForm}
+        />
         
         {showAddForm && (
           <ErrorBoundary>
@@ -367,18 +377,16 @@ function App() {
           onCancel={handleCancelDelete}
         />
         
-        {notification && (
-          <Notification 
-            message={notification.message}
-            type={notification.type}
-            onClose={hideNotification}
-          />
-        )}
+        <ToastContainer 
+          toasts={toasts}
+          onRemoveToast={removeToast}
+        />
 
         <AlphabetIndex
           contacts={contacts}
           onLetterClick={setSelectedLetter}
           activeLetter={selectedLetter}
+          onHighlightContact={setHighlightedContactId}
         />
       </div>
     </ErrorBoundary>

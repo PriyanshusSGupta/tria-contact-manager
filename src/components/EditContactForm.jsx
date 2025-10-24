@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import './EditContactForm.css';
 import TagSelector from './TagSelector.jsx';
+import ImageUpload from './ImageUpload.jsx';
 
 function EditContactForm({ contact, onSave, onCancel, availableTags, onManageTags }) {
   const [formData, setFormData] = useState({
     name: contact.name || '',
     email: contact.email || '',
     phone: contact.phone || '',
-    tags: contact.tags || []
+    tags: contact.tags || [],
+    image: contact.image || null
   });
   const [errors, setErrors] = useState({});
 
@@ -48,7 +50,8 @@ function EditContactForm({ contact, onSave, onCancel, availableTags, onManageTag
         name: formData.name.trim(),
         email: formData.email.trim(),
         phone: formData.phone.trim(),
-        tags: formData.tags
+        tags: formData.tags,
+        image: formData.image
       };
       
       onSave(updatedContact);
@@ -66,6 +69,14 @@ function EditContactForm({ contact, onSave, onCancel, availableTags, onManageTag
 
   const handleTagsChange = (selectedTags) => {
     setFormData(prev => ({ ...prev, tags: selectedTags }));
+  };
+
+  const handleImageChange = (imageDataUrl) => {
+    setFormData(prev => ({ ...prev, image: imageDataUrl }));
+  };
+
+  const handleImageRemove = () => {
+    setFormData(prev => ({ ...prev, image: null }));
   };
 
   const handleOverlayClick = (e) => {
@@ -92,6 +103,16 @@ function EditContactForm({ contact, onSave, onCancel, availableTags, onManageTag
         </div>
         
         <form onSubmit={handleSubmit}>
+          <div className="form-group image-upload-group">
+            <label>Profile Photo</label>
+            <ImageUpload
+              currentImage={formData.image}
+              onImageChange={handleImageChange}
+              onImageRemove={handleImageRemove}
+              name={formData.name}
+            />
+          </div>
+
           <div className="form-group">
             <label htmlFor="edit-name">Full Name *</label>
             <input

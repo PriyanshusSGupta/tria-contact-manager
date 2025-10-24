@@ -1,0 +1,244 @@
+.fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  background: var(--primary);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+  overflow: hidden;
+  color: white;
+}
+
+.fab:hover {
+  background: var(--primary-hover);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+.fab:active,
+.fab-pressed {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.fab-active {
+  background: var(--error);
+  transform: rotate(45deg);
+}
+
+.fab-active:hover {
+  background: #c82333;
+  transform: rotate(45deg) scale(1.1);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
+.fab-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.fab-icon {
+  position: absolute;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fab-icon-visible {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.fab-icon-hidden {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.8);
+}
+
+.fab-plus {
+  transform-origin: center;
+}
+
+.fab-x {
+  transform-origin: center;
+}
+
+.fab-active .fab-plus {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.8);
+}
+
+.fab-active .fab-x {
+  opacity: 1;
+  transform: rotate(-45deg) scale(1);
+}
+
+/* Ripple effect */
+.fab-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: all 0.6s ease-out;
+}
+
+.fab:active .fab-ripple,
+.fab-pressed .fab-ripple {
+  width: 120px;
+  height: 120px;
+  opacity: 0;
+}
+
+/* Background pulse animation */
+.fab-pulse {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0;
+  animation: fabPulse 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes fabPulse {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.3);
+  }
+}
+
+.fab-active .fab-pulse {
+  background: var(--error);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .fab {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 52px;
+    height: 52px;
+  }
+  
+  .fab-icon-container {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .fab-icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fab {
+    bottom: 1rem;
+    right: 1rem;
+    width: 48px;
+    height: 48px;
+  }
+  
+  .fab-icon-container {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .fab-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Landscape mobile - adjust position to avoid keyboard */
+@media (max-height: 500px) and (orientation: landscape) {
+  .fab {
+    bottom: 0.75rem;
+    right: 1rem;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* Focus styles for accessibility */
+.fab:focus-visible {
+  outline: 3px solid rgba(0, 123, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .fab {
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+}
+
+[data-theme="dark"] .fab:hover {
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
+}
+
+[data-theme="dark"] .fab-active:hover {
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.5);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .fab {
+    transition: background-color 0.2s ease;
+  }
+  
+  .fab:hover {
+    transform: none;
+  }
+  
+  .fab-active {
+    transform: none;
+  }
+  
+  .fab-active:hover {
+    transform: none;
+  }
+  
+  .fab-icon {
+    transition: opacity 0.2s ease;
+  }
+  
+  .fab-pulse {
+    animation: none;
+  }
+  
+  .fab-ripple {
+    display: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .fab {
+    border: 2px solid currentColor;
+  }
+}
