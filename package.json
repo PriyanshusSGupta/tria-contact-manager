@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "description": "A modern, feature-rich contact management application built with React 19 and Vite",
   "type": "module",
-  "homepage": "https://github.com/yourusername/tria-contacts",
+  "homepage": "https://github.com/PriyanshusSGupta/tria-contact-manager",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/tria-contacts.git"
+    "url": "https://github.com/PriyanshusSGupta/tria-contact-manager.git"
   },
   "keywords": [
     "react",

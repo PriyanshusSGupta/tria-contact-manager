@@ -4,7 +4,7 @@ A modern, feature-rich contact management application built with React 19 and Vi
 
 ## 🚀 Live Demo
 
-**[View Live Application](https://your-app-url.vercel.app)** *(URL will be updated after deployment)*
+**[View Live Application](https://tria-contact-manager.vercel.app)** *(Will be live after Vercel deployment)*
 
 ## ✨ Features
 
@@ -82,8 +82,8 @@ src/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/tria-contacts.git
-   cd tria-contacts
+   git clone https://github.com/PriyanshusSGupta/tria-contact-manager.git
+   cd tria-contact-manager
    ```
 
 2. **Install dependencies**
@@ -206,10 +206,9 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 👨‍💻 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- Portfolio: [your-portfolio.com](https://your-portfolio.com)
+**Priyanshu S Gupta**
+- GitHub: [@PriyanshusSGupta](https://github.com/PriyanshusSGupta)
+- Repository: [tria-contact-manager](https://github.com/PriyanshusSGupta/tria-contact-manager)
 
 ---
 
