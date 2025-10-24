@@ -29,14 +29,24 @@ function AlphabetIndex({ contacts, onLetterClick, activeLetter }) {
         // Add highlight effect
         contactElement.classList.add('alphabet-highlight');
         
+        // Use different scroll behavior for mobile
+        const isMobile = window.innerWidth <= 768;
+        const scrollOptions = {
+          behavior: 'smooth',
+          block: isMobile ? 'start' : 'center',
+          inline: 'nearest'
+        };
+        
         // Scroll to the contact
-        contactElement.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'center' 
-        });
+        contactElement.scrollIntoView(scrollOptions);
         
         // Set active letter for visual feedback
         onLetterClick(letter);
+        
+        // Add haptic feedback on mobile devices
+        if ('vibrate' in navigator && isMobile) {
+          navigator.vibrate(50);
+        }
         
         // Remove highlight and clear active letter after animation
         setTimeout(() => {
