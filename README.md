@@ -4,7 +4,7 @@ A modern, feature-rich contact management application built with React 19 and Vi
 
 ## 🚀 Live Demo
 
-**[View Live Application](https://tria-contact-manager.vercel.app)** *(Will be live after Vercel deployment)*
+**[View Live Application](https://tria-contact-manager-9z1zhm97f-wensleds-projects.vercel.app)**
 
 ## ✨ Features
 
