@@ -1,0 +1,234 @@
+.settings-dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.settings-btn {
+  background: var(--bg-primary);
+  border: 2px solid var(--border-primary);
+  border-radius: 8px;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: var(--text-secondary);
+  min-width: 40px;
+  min-height: 40px;
+  position: relative;
+}
+
+.settings-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--bg-secondary);
+  transform: scale(1.05);
+}
+
+.settings-btn.active {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--bg-secondary);
+}
+
+.settings-btn.rotating {
+  animation: settingsRotate 0.3s ease-out;
+}
+
+@keyframes settingsRotate {
+  0% { transform: rotate(0deg) scale(1.05); }
+  50% { transform: rotate(90deg) scale(1.1); }
+  100% { transform: rotate(0deg) scale(1.05); }
+}
+
+.settings-btn svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.settings-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  min-width: 280px;
+  z-index: 1000;
+  animation: dropdownSlideIn 0.2s ease-out;
+  overflow: hidden;
+}
+
+@keyframes dropdownSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dropdown-arrow {
+  position: absolute;
+  top: -6px;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-bottom: none;
+  border-right: none;
+  transform: rotate(45deg);
+}
+
+.dropdown-header {
+  padding: 1rem 1rem 0.5rem 1rem;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.dropdown-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dropdown-content {
+  padding: 0.5rem 0;
+}
+
+.dropdown-item {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background: var(--bg-secondary);
+}
+
+.dropdown-item:active {
+  background: var(--bg-tertiary);
+}
+
+.item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover .item-icon {
+  background: var(--primary);
+  color: white;
+  transform: scale(1.05);
+}
+
+.item-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex: 1;
+}
+
+.item-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.item-description {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.2;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .settings-btn {
+    padding: 0.4rem;
+    min-width: 36px;
+    min-height: 36px;
+  }
+  
+  .settings-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .settings-dropdown {
+    min-width: 260px;
+    right: -10px;
+  }
+
+  .dropdown-item {
+    padding: 0.625rem 0.75rem;
+  }
+
+  .item-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .item-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .item-title {
+    font-size: 0.85rem;
+  }
+
+  .item-description {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-dropdown {
+    min-width: 240px;
+    right: -20px;
+  }
+}
+
+/* Focus styles for accessibility */
+.settings-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.dropdown-item:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .dropdown-arrow {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .settings-dropdown {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}

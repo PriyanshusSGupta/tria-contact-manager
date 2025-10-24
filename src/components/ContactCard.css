@@ -1,0 +1,344 @@
+.contact-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  animation: slideInUp 0.4s ease-out both;
+  position: relative;
+}
+
+/* Grid View (default) */
+.contact-card.grid-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.contact-card.grid-view .contact-main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* List View */
+.contact-card.list-view {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  gap: 1.5rem;
+}
+
+.contact-card.list-view .contact-main-content {
+  display: grid;
+  grid-template-columns: auto minmax(200px, 1fr) minmax(250px, 1fr) minmax(180px, 1fr) auto;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.contact-card.list-view .contact-info {
+  display: contents; /* This makes the child elements participate in the parent grid */
+}
+
+.contact-card.list-view .contact-name-section,
+.contact-card.list-view .contact-email-section,
+.contact-card.list-view .contact-phone-section {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0.5rem;
+}
+
+
+
+.contact-card.list-view .contact-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contact-card.list-view .contact-email,
+.contact-card.list-view .contact-phone {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contact-card.list-view .contact-tags {
+  margin: 0;
+  justify-content: flex-end;
+  max-width: 200px;
+  overflow: hidden;
+  align-self: center;
+}
+
+.contact-card.list-view .section-label {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.125rem;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.contact-card.list-view:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-sm);
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+
+/* Avatar styles moved to ContactAvatar component */
+.contact-card.grid-view .contact-avatar {
+  margin-bottom: 1rem;
+}
+
+.contact-card.list-view .contact-avatar {
+  margin-bottom: 0;
+}
+
+.contact-info {
+  text-align: left;
+  min-width: 0; /* Allow text to wrap */
+}
+
+.contact-name {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.contact-email {
+  margin: 0 0 0.25rem 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.contact-phone {
+  margin: 0 0 0.75rem 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.contact-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.contact-tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.contact-card-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.contact-card:hover .contact-card-actions {
+  opacity: 1;
+}
+
+.contact-action-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.contact-action-btn:hover {
+  transform: scale(1.05);
+}
+
+.contact-action-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+}
+
+.edit-btn:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.delete-btn:hover {
+  background: var(--error);
+  color: white;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .contact-card {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+  
+  .contact-card.grid-view .contact-avatar {
+    margin-bottom: 0.75rem;
+  }
+  
+  .contact-card.list-view {
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .contact-card.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .contact-card.list-view .contact-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .contact-card.list-view .contact-name-section,
+  .contact-card.list-view .contact-email-section,
+  .contact-card.list-view .contact-phone-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0;
+  }
+  
+  .contact-card.list-view .section-label {
+    min-width: 60px;
+    margin-bottom: 0;
+  }
+  
+  .contact-card.list-view .section-label {
+    display: none;
+  }
+  
+  .contact-name {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+  
+  .contact-email,
+  .contact-phone {
+    font-size: 0.85rem;
+  }
+  
+  .contact-card-actions {
+    top: 0.75rem;
+    right: 0.75rem;
+    opacity: 1; /* Always visible on mobile */
+  }
+  
+  .contact-action-btn {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .contact-action-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-card {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .contact-card .contact-avatar {
+    margin-bottom: 0.5rem;
+  }
+  
+  .contact-name {
+    font-size: 0.95rem;
+    margin-bottom: 0.35rem;
+  }
+  
+  .contact-email,
+  .contact-phone {
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+  }
+}
+
+/* Keyboard navigation */
+.contact-card:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.contact-card:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .contact-card:hover {
+    transform: none;
+  }
+  
+  .contact-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}

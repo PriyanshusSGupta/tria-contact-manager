@@ -1,0 +1,77 @@
+.contact-avatar {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.contact-avatar-initials {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Size variants */
+.contact-avatar-small {
+  width: 32px;
+  height: 32px;
+  font-size: 0.75rem;
+}
+
+.contact-avatar-medium {
+  width: 60px;
+  height: 60px;
+  font-size: 1.2rem;
+}
+
+.contact-avatar-large {
+  width: 80px;
+  height: 80px;
+  font-size: 1.5rem;
+}
+
+.contact-avatar-xlarge {
+  width: 120px;
+  height: 120px;
+  font-size: 2rem;
+}
+
+/* Hover effect */
+.contact-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .contact-avatar-medium {
+    width: 50px;
+    height: 50px;
+    font-size: 1.1rem;
+  }
+  
+  .contact-avatar-large {
+    width: 70px;
+    height: 70px;
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-avatar-medium {
+    width: 45px;
+    height: 45px;
+    font-size: 1rem;
+  }
+  
+  .contact-avatar-large {
+    width: 60px;
+    height: 60px;
+    font-size: 1.2rem;
+  }
+}
