@@ -26,6 +26,8 @@ function ContactCard({ contact, animationDelay = 0, onEdit, onDelete, availableT
       role="button"
       tabIndex={0}
       aria-label={`Contact: ${contact.name}, ${contact.email}, ${contact.phone}`}
+      data-contact-id={contact.id}
+      data-contact-letter={contact.name.charAt(0).toUpperCase()}
     >
       <div className="contact-card-actions">
         <button 

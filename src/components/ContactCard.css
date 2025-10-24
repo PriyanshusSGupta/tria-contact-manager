@@ -342,3 +342,21 @@
     transition: transform 0.1s ease;
   }
 }
+
+/* Highlight effect when scrolled to via alphabet index */
+.contact-card.alphabet-highlight {
+  animation: alphabetHighlight 2s ease-out;
+}
+
+@keyframes alphabetHighlight {
+  0% {
+    background: var(--primary);
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+  }
+  100% {
+    background: var(--bg-primary);
+    transform: scale(1);
+    box-shadow: var(--shadow-sm);
+  }
+}

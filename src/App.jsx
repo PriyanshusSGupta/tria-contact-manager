@@ -17,6 +17,8 @@ import ThemeToggle from './components/ThemeToggle.jsx'
 import BackgroundSelector from './components/BackgroundSelector.jsx'
 import SettingsDropdown from './components/SettingsDropdown.jsx'
 import ViewToggle from './components/ViewToggle.jsx'
+
+import AlphabetIndex from './components/AlphabetIndex.jsx'
 import { useLocalStorage } from './hooks/useLocalStorage.js'
 import { needsMigration, migrateData, validateContacts } from './utils/dataMigration.js'
 import { fuzzySearchContacts } from './utils/fuzzySearch.js'
@@ -36,6 +38,8 @@ function App() {
   const [notification, setNotification] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [viewMode, setViewMode] = useLocalStorage('tria-view-mode', 'grid')
+  const [sortOrder, setSortOrder] = useLocalStorage('tria-sort-order', 'asc')
+  const [selectedLetter, setSelectedLetter] = useState(null)
 
   // Background context
   const { background, changeBackground } = useBackground()
@@ -197,7 +201,7 @@ function App() {
     }
   };
 
-  // Filter contacts based on search term and selected tags
+  // Filter and sort contacts based on search term, selected tags, sort order, and alphabet filter
   const filteredContacts = useMemo(() => {
     let filtered = contacts;
 
@@ -209,6 +213,8 @@ function App() {
       });
     }
 
+    // Note: We don't filter by letter anymore - we scroll to it instead
+
     // Apply fuzzy search if there's a search term
     if (searchTerm && searchTerm.trim()) {
       filtered = fuzzySearchContacts(filtered, searchTerm.trim(), {
@@ -217,8 +223,20 @@ function App() {
       });
     }
 
+    // Sort contacts alphabetically by name
+    filtered.sort((a, b) => {
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      
+      if (sortOrder === 'asc') {
+        return nameA.localeCompare(nameB);
+      } else {
+        return nameB.localeCompare(nameA);
+      }
+    });
+
     return filtered;
-  }, [contacts, searchTerm, selectedTagFilters]);
+  }, [contacts, searchTerm, selectedTagFilters, sortOrder, selectedLetter]);
 
   // Calculate tag counts for filtering
   const tagCounts = useMemo(() => {
@@ -261,10 +279,12 @@ function App() {
                   onTagsChange={setSelectedTagFilters}
                   contactCounts={tagCounts}
                 />
-                <ViewToggle 
-                  viewMode={viewMode}
-                  onViewModeChange={setViewMode}
-                />
+                <div className="view-controls">
+                  <ViewToggle 
+                    viewMode={viewMode}
+                    onViewModeChange={setViewMode}
+                  />
+                </div>
               </div>
               <ContactList 
                 contacts={filteredContacts} 
@@ -354,6 +374,12 @@ function App() {
             onClose={hideNotification}
           />
         )}
+
+        <AlphabetIndex
+          contacts={contacts}
+          onLetterClick={setSelectedLetter}
+          activeLetter={selectedLetter}
+        />
       </div>
     </ErrorBoundary>
   )
