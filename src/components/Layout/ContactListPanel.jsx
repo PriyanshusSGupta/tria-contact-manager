@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Plus, Grid3X3, List, Filter, SortAsc, MoreVertical } from 'lucide-react';
 import ContactCard from '../ContactCard.jsx';
+import MobileToolbar from './MobileToolbar.jsx';
 import './ContactListPanel.css';
 
 function ContactListPanel({
@@ -17,20 +18,35 @@ function ContactListPanel({
   const [viewMode, setViewMode] = useState('list'); // 'grid' or 'list'
   const [sortBy, setSortBy] = useState('name'); // 'name', 'recent', 'frequency'
   const [showFilters, setShowFilters] = useState(false);
+  const [showFavorites, setShowFavorites] = useState(false);
 
-  // Sort contacts
-  const sortedContacts = [...contacts].sort((a, b) => {
-    switch (sortBy) {
-      case 'name':
-        return a.name.localeCompare(b.name);
-      case 'recent':
-        return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
-      case 'frequency':
-        return (b.interactionCount || 0) - (a.interactionCount || 0);
-      default:
-        return 0;
-    }
-  });
+  // Filter and sort contacts
+  const filteredAndSortedContacts = [...contacts]
+    .filter(contact => {
+      // Apply favorites filter if active
+      if (showFavorites && !contact.isFavorite) {
+        return false;
+      }
+      return true;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'name':
+          return a.name.localeCompare(b.name);
+        case 'name-desc':
+          return b.name.localeCompare(a.name);
+        case 'recent':
+          return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+        case 'recent-desc':
+          return new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
+        case 'frequency':
+          return (b.interactionCount || 0) - (a.interactionCount || 0);
+        case 'frequency-desc':
+          return (a.interactionCount || 0) - (b.interactionCount || 0);
+        default:
+          return 0;
+      }
+    });
 
   const getCategoryTitle = () => {
     switch (activeCategory) {
@@ -51,6 +67,9 @@ function ContactListPanel({
 
   const getResultsText = () => {
     const count = contacts.length;
+    if (showFavorites) {
+      return `${count} favorite${count !== 1 ? 's' : ''}`;
+    }
     if (searchQuery) {
       return `${count} result${count !== 1 ? 's' : ''} for "${searchQuery}"`;
     }
@@ -90,9 +109,12 @@ function ContactListPanel({
               onChange={(e) => setSortBy(e.target.value)}
               className="sort-select"
             >
-              <option value="name">Sort by Name</option>
-              <option value="recent">Recently Added</option>
+              <option value="name">Sort by Name A-Z</option>
+              <option value="name-desc">Sort by Name Z-A</option>
+              <option value="recent">Recently Added (New)</option>
+              <option value="recent-desc">Recently Added (Old)</option>
               <option value="frequency">Most Contacted</option>
+              <option value="frequency-desc">Least Contacted</option>
             </select>
           </div>
           
@@ -114,6 +136,18 @@ function ContactListPanel({
           </button>
         </div>
       </div>
+
+      {/* Mobile Toolbar */}
+      <MobileToolbar
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        showFilters={showFilters}
+        onToggleFilters={() => setShowFilters(!showFilters)}
+        showFavorites={showFavorites}
+        onToggleFavorites={() => setShowFavorites(!showFavorites)}
+      />
 
       {/* Filters (if shown) */}
       {showFilters && (
@@ -139,7 +173,7 @@ function ContactListPanel({
 
       {/* Contact List */}
       <div className={`contact-list ${viewMode}-view`}>
-        {sortedContacts.length === 0 ? (
+        {filteredAndSortedContacts.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon">
               <Plus size={48} />
@@ -163,13 +197,12 @@ function ContactListPanel({
           </div>
         ) : (
           <div className="contacts-grid">
-            {sortedContacts.map((contact, index) => (
+            {filteredAndSortedContacts.map((contact, index) => (
               <div
                 key={contact.id}
                 className={`contact-item ${
                   selectedContact?.id === contact.id ? 'selected' : ''
                 }`}
-                onClick={() => onContactSelect(contact)}
               >
                 <ContactCard
                   contact={contact}
@@ -179,6 +212,7 @@ function ContactListPanel({
                   availableTags={availableTags}
                   viewMode={viewMode}
                   isHighlighted={selectedContact?.id === contact.id}
+                  onContactSelect={onContactSelect}
                 />
               </div>
             ))}

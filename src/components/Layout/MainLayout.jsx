@@ -3,6 +3,7 @@ import { useMediaQuery } from '../hooks/useMediaQuery.js';
 import Sidebar from './Sidebar.jsx';
 import ContactListPanel from './ContactListPanel.jsx';
 import ContactDetailPanel from './ContactDetailPanel.jsx';
+import MobileHeader from './MobileHeader.jsx';
 import './MainLayout.css';
 
 function MainLayout({ 
@@ -86,6 +87,17 @@ function MainLayout({
 
   return (
     <div className={`main-layout ${isMobile ? 'mobile' : ''} ${isTablet ? 'tablet' : ''}`}>
+      {/* Mobile Header */}
+      {isMobile && (
+        <MobileHeader
+          onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
+          onAddContact={onAddContact}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          activeCategory={activeCategory}
+        />
+      )}
+      
       {/* Sidebar */}
       <div className={`layout-sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
         <Sidebar
@@ -102,6 +114,7 @@ function MainLayout({
           onImportExport={onImportExport}
           onBackgroundSelector={onBackgroundSelector}
           onManageTags={onManageTags}
+          isMobile={isMobile}
         />
       </div>
 

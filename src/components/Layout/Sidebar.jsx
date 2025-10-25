@@ -29,7 +29,8 @@ function Sidebar({
   onSearchChange,
   onImportExport,
   onBackgroundSelector,
-  onManageTags
+  onManageTags,
+  isMobile
 }) {
   const [expandedSections, setExpandedSections] = useState({
     categories: true,
@@ -131,8 +132,8 @@ function Sidebar({
         </button>
       </div>
 
-      {/* Search */}
-      {!collapsed && (
+      {/* Search - Hidden on mobile since we have MobileHeader search */}
+      {!collapsed && !isMobile && (
         <div className="sidebar-search">
           <div className="search-input-wrapper">
             <Search size={16} />

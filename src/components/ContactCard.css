@@ -10,6 +10,7 @@
   box-sizing: border-box;
   animation: slideInUp 0.4s ease-out both;
   position: relative;
+  overflow: visible;
 }
 
 /* Grid View (default) */
@@ -29,33 +30,142 @@
 
 /* List View */
 .contact-card.list-view {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
   padding: 1rem 1.5rem;
   border-radius: 8px;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .contact-card.list-view .contact-main-content {
-  display: grid;
-  grid-template-columns: auto minmax(200px, 1fr) minmax(250px, 1fr) minmax(180px, 1fr) auto;
+  display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   width: 100%;
 }
 
-.contact-card.list-view .contact-info {
-  display: contents; /* This makes the child elements participate in the parent grid */
+/* Grid View */
+.contact-card.grid-view .contact-main-content {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
 }
 
+/* Action Buttons */
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--primary);
+}
+
+.phone-btn:hover {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border-color: #22c55e;
+}
+
+.message-btn:hover {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.phone-button-wrapper {
+  position: relative;
+}
+
+/* List view action buttons */
+.list-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Grid view action buttons */
+.grid-phone-button,
+.grid-message-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Contact Details Group */
+.contact-details-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* List view details group */
+.contact-card.list-view .contact-details-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Grid view details group */
+.contact-card.grid-view .contact-details-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* List view info sections - now in horizontal layout */
 .contact-card.list-view .contact-name-section,
 .contact-card.list-view .contact-email-section,
 .contact-card.list-view .contact-phone-section {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding: 0.5rem;
+  padding: 0 0.75rem;
+  flex: 1;
+}
+
+.contact-card.list-view .contact-name-section {
+  min-width: 150px;
+}
+
+.contact-card.list-view .contact-email-section {
+  min-width: 200px;
+}
+
+.contact-card.list-view .contact-phone-section {
+  min-width: 140px;
+}
+
+/* Grid view info - centered layout */
+.contact-card.grid-view .contact-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.25rem;
+}
+
+/* Tags positioning in grid view */
+.contact-card.grid-view .contact-tags {
+  margin-top: 0.75rem;
+  justify-content: center;
 }
 
 
@@ -64,6 +174,7 @@
   margin: 0;
   font-size: 1rem;
   font-weight: 600;
+  color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -89,12 +200,12 @@
 
 .contact-card.list-view .section-label {
   font-size: 0.7rem;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 0.125rem;
   font-weight: 500;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .contact-card.list-view:hover {
@@ -124,13 +235,17 @@
   box-shadow: 0 4px 20px rgba(0, 123, 255, 0.12);
 }
 
-/* Avatar styles moved to ContactAvatar component */
-.contact-card.grid-view .contact-avatar {
+/* Avatar positioning within details group */
+.contact-details-group .contact-avatar {
+  flex-shrink: 0;
+}
+
+.contact-card.grid-view .contact-details-group .contact-avatar {
   margin-bottom: 1rem;
 }
 
-.contact-card.list-view .contact-avatar {
-  margin-bottom: 0;
+.contact-card.list-view .contact-details-group .contact-avatar {
+  margin-right: 0.5rem;
 }
 
 .contact-info {
@@ -238,30 +353,43 @@
     min-height: 200px;
   }
   
-  .contact-card.grid-view .contact-avatar {
+  .contact-card.grid-view .contact-details-group .contact-avatar {
     margin-bottom: 0.75rem;
   }
   
-  /* List view - compact horizontal layout */
-  .contact-card.list-view {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    min-height: 70px;
-  }
-  
-  .contact-card.list-view .contact-main-content {
-    display: flex;
-    align-items: center;
+  .contact-card.grid-view .contact-details-group {
     gap: 0.75rem;
-    width: 100%;
   }
   
-  .contact-card.list-view .contact-name-section,
+  /* List view - mobile layout */  
+  .contact-card.list-view .contact-main-content {
+    flex-direction: row-reverse;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .contact-card.list-view .contact-details-group {
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .contact-card.list-view .contact-name-section{
+    padding: 0.25rem;
+    min-width: auto;
+    text-align: left;
+  }
+
   .contact-card.list-view .contact-email-section,
   .contact-card.list-view .contact-phone-section {
-    display: none; /* Hide individual sections on mobile list view */
+    display: none;
+  }
+  
+  .list-action-buttons {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
   }
   
   .contact-card.list-view .contact-info {
@@ -312,6 +440,14 @@
   }
   
   .contact-card-actions {
+    /* display: none; */
+    top: 0.75rem;
+    right: 0.75rem;
+    opacity: 1; /* Always visible on mobile */
+  }
+
+  .contact-card-actions.list-view {
+    display: none;
     top: 0.75rem;
     right: 0.75rem;
     opacity: 1; /* Always visible on mobile */
@@ -336,7 +472,7 @@
     min-height: 180px;
   }
   
-  .contact-card.grid-view .contact-avatar {
+  .contact-card.grid-view .contact-details-group .contact-avatar {
     margin-bottom: 0.5rem;
   }
   
@@ -363,6 +499,16 @@
   
   .contact-card.list-view .contact-name {
     font-size: 0.85rem;
+  }
+  
+  /* Mobile action buttons */
+  .action-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .list-action-buttons {
+    gap: 0.75rem;
   }
   
   .contact-card.list-view .contact-email {

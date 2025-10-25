@@ -1,0 +1,197 @@
+/* Mobile Toolbar */
+.mobile-toolbar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-primary);
+  gap: 1rem;
+}
+
+/* View Controls */
+.mobile-view-controls {
+  display: flex;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 0.25rem;
+  border: 1px solid var(--border-primary);
+}
+
+.mobile-view-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.mobile-view-button:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.mobile-view-button.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* Favorites Button */
+.mobile-favorites-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+  height: 44px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.mobile-favorites-button:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--primary);
+}
+
+.mobile-favorites-button.active {
+  background: var(--warning);
+  border-color: var(--warning);
+  color: white;
+}
+
+.mobile-favorites-button.active:hover {
+  background: var(--warning-hover, #f59e0b);
+}
+
+.mobile-favorites-button:active {
+  transform: scale(0.95);
+}
+
+.favorites-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Sort Button */
+.mobile-sort-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+  height: 44px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.mobile-sort-button:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--primary);
+}
+
+.mobile-sort-button:active {
+  transform: scale(0.95);
+}
+
+.sort-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Filter Button */
+.mobile-filter-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-filter-button:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--primary);
+}
+
+.mobile-filter-button.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.mobile-filter-button:active {
+  transform: scale(0.95);
+}
+
+/* Show on mobile */
+@media (max-width: 768px) {
+  .mobile-toolbar {
+    display: flex;
+  }
+}
+
+/* Dark theme */
+[data-theme="dark"] .mobile-toolbar {
+  background: var(--bg-secondary);
+  border-bottom-color: var(--border-primary);
+}
+
+[data-theme="dark"] .mobile-view-controls {
+  background: var(--bg-primary);
+  border-color: var(--border-primary);
+}
+
+[data-theme="dark"] .mobile-favorites-button {
+  background: var(--bg-primary);
+  border-color: var(--border-primary);
+}
+
+[data-theme="dark"] .mobile-sort-button {
+  background: var(--bg-primary);
+  border-color: var(--border-primary);
+}
+
+[data-theme="dark"] .mobile-filter-button {
+  background: var(--bg-primary);
+  border-color: var(--border-primary);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-view-button,
+  .mobile-favorites-button,
+  .mobile-sort-button,
+  .mobile-filter-button {
+    transition: none;
+  }
+  
+  .mobile-favorites-button:active,
+  .mobile-sort-button:active,
+  .mobile-filter-button:active {
+    transform: none;
+  }
+}

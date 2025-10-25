@@ -1,0 +1,86 @@
+/* Call Options Dropup */
+.call-options-dropup {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  /* border: 1px solid black; */
+  border-radius: 8px;
+  box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  z-index: 99999;
+  animation: callDropupSlideIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 160px;
+  backdrop-filter: blur(12px);
+}
+
+@keyframes callDropupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+
+.call-option-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  /* border: 1px solid black; */
+  border-radius: 5px;
+}
+
+.call-option-item:hover {
+  background: var(--bg-secondary);
+}
+
+.call-option-item:active {
+  background: var(--bg-tertiary);
+}
+
+.call-option-item svg {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+/* Dark theme */
+[data-theme="dark"] .call-options-dropup {
+  background: var(--bg-primary);
+  border-color: var(--border-primary);
+  box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .call-options-dropup {
+    min-width: 140px;
+  }
+  
+  .call-option-item {
+    padding: 0.875rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .call-options-dropup {
+    animation: none;
+  }
+  
+  .call-option-item {
+    transition: none;
+  }
+}

@@ -31,11 +31,11 @@ function ImageUpload({ currentImage, onImageChange, onImageRemove, name = '' }) 
         // Create canvas for resizing
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        
+
         // Calculate dimensions (max 300x300)
         const maxSize = 300;
         let { width, height } = img;
-        
+
         if (width > height) {
           if (width > maxSize) {
             height = (height * maxSize) / width;
@@ -47,14 +47,14 @@ function ImageUpload({ currentImage, onImageChange, onImageRemove, name = '' }) 
             height = maxSize;
           }
         }
-        
+
         canvas.width = width;
         canvas.height = height;
-        
+
         // Draw and compress
         ctx.drawImage(img, 0, 0, width, height);
         const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
-        
+
         onImageChange(compressedDataUrl);
         setIsLoading(false);
       };
@@ -100,10 +100,9 @@ function ImageUpload({ currentImage, onImageChange, onImageRemove, name = '' }) 
 
   return (
     <div className="image-upload">
-      <div 
-        className={`image-upload-area ${
-          isDragging ? 'dragging' : ''
-        } ${currentImage ? 'has-image' : ''}`}
+      <div
+        className={`image-upload-area ${isDragging ? 'dragging' : ''
+          } ${currentImage ? 'has-image' : ''}`}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -122,7 +121,7 @@ function ImageUpload({ currentImage, onImageChange, onImageRemove, name = '' }) 
               <span>Change Photo</span>
             </div>
             {onImageRemove && (
-              <button 
+              <button
                 className="remove-image-btn"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -136,18 +135,15 @@ function ImageUpload({ currentImage, onImageChange, onImageRemove, name = '' }) 
           </div>
         ) : (
           <div className="image-placeholder">
-            <div className="placeholder-avatar">
-              {name ? getInitials(name) : <User size={32} />}
-            </div>
             <div className="upload-content">
-              <Camera size={24} />
+              <Camera size={10} />
               <span className="upload-text">Add Photo</span>
               <span className="upload-hint">Click or drag image here</span>
             </div>
           </div>
         )}
       </div>
-      
+
       <input
         ref={fileInputRef}
         type="file"
@@ -155,7 +151,7 @@ function ImageUpload({ currentImage, onImageChange, onImageRemove, name = '' }) 
         onChange={handleFileInputChange}
         style={{ display: 'none' }}
       />
-      
+
       <div className="image-upload-info">
         <span>Supports JPG, PNG, GIF up to 5MB</span>
       </div>

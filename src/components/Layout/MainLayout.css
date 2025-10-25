@@ -15,6 +15,8 @@
 .main-layout.mobile {
   grid-template-columns: 1fr;
   grid-template-areas: "list";
+  display: flex;
+  flex-direction: column;
 }
 
 /* Sidebar */
@@ -37,7 +39,7 @@
   top: 0;
   left: 0;
   bottom: 0;
-  width: 280px;
+  width: 320px;
   transform: translateX(-100%);
   z-index: 1000;
   box-shadow: var(--shadow-lg);
@@ -64,6 +66,8 @@
 
 .main-layout.mobile .layout-contact-list {
   border-right: none;
+  flex: 1;
+  overflow: hidden;
 }
 
 /* Detail Panel */
