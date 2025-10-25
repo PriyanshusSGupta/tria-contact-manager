@@ -118,6 +118,13 @@
     font-size: 13px;
   }
 
+  /* Ensure theme toggle is properly sized on mobile */
+  .dropup-item .theme-toggle {
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
   /* On mobile, keep normal positioning */
   .sidebar.collapsed .settings-dropup {
     left: -140px;
