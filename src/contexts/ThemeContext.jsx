@@ -1,29 +1,21 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-
-const ThemeContext = createContext();
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-};
+import { useEffect, useState } from 'react';
+import { THEME_STORAGE_KEY, THEMES } from '../constants/themes.js';
+import { ThemeContext } from './contexts.js';
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
     // Check localStorage first, then system preference
-    const savedTheme = localStorage.getItem('tria-theme');
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
     if (savedTheme) {
       return savedTheme;
     }
     
     // Check system preference
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
+      return THEMES.DARK;
     }
     
-    return 'light';
+    return THEMES.LIGHT;
   });
 
   // Listen for system theme changes
@@ -32,9 +24,9 @@ export const ThemeProvider = ({ children }) => {
     
     const handleChange = (e) => {
       // Only auto-switch if user hasn't manually set a preference
-      const savedTheme = localStorage.getItem('tria-theme');
+      const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
       if (!savedTheme) {
-        setTheme(e.matches ? 'dark' : 'light');
+        setTheme(e.matches ? THEMES.DARK : THEMES.LIGHT);
       }
     };
 
@@ -45,18 +37,18 @@ export const ThemeProvider = ({ children }) => {
   // Apply theme to document and save to localStorage
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('tria-theme', theme);
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    setTheme(prev => prev === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT);
   };
 
-  const setLightTheme = () => setTheme('light');
-  const setDarkTheme = () => setTheme('dark');
+  const setLightTheme = () => setTheme(THEMES.LIGHT);
+  const setDarkTheme = () => setTheme(THEMES.DARK);
   const setSystemTheme = () => {
-    localStorage.removeItem('tria-theme');
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    localStorage.removeItem(THEME_STORAGE_KEY);
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? THEMES.DARK : THEMES.LIGHT;
     setTheme(systemTheme);
   };
 
@@ -66,8 +58,8 @@ export const ThemeProvider = ({ children }) => {
     setLightTheme,
     setDarkTheme,
     setSystemTheme,
-    isLight: theme === 'light',
-    isDark: theme === 'dark'
+    isLight: theme === THEMES.LIGHT,
+    isDark: theme === THEMES.DARK
   };
 
   return (

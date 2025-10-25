@@ -53,23 +53,23 @@ function substringMatch(text, query) {
   return text.toLowerCase().includes(query.toLowerCase());
 }
 
-// Extract searchable text from contact
-function getSearchableText(contact) {
-  const parts = [
-    contact.name || '',
-    contact.email || '',
-    contact.phone || ''
-  ];
-  
-  return parts.join(' ').toLowerCase();
-}
+// Extract searchable text from contact (currently unused but kept for future use)
+// function getSearchableText(contact) {
+//   const parts = [
+//     contact.name || '',
+//     contact.email || '',
+//     contact.phone || ''
+//   ];
+//   
+//   return parts.join(' ').toLowerCase();
+// }
 
 // Main fuzzy search function
 export function fuzzySearchContacts(contacts, query, options = {}) {
   const {
     threshold = 0.3,           // Minimum similarity score
     maxResults = 50,           // Maximum number of results
-    prioritizeExactMatch = true, // Prioritize exact matches
+    // prioritizeExactMatch = true, // Prioritize exact matches
     prioritizeStartsWith = true  // Prioritize starts-with matches
   } = options;
   
@@ -81,7 +81,7 @@ export function fuzzySearchContacts(contacts, query, options = {}) {
   const results = [];
   
   for (const contact of contacts) {
-    const searchText = getSearchableText(contact);
+    // const searchText = getSearchableText(contact);
     const name = contact.name || '';
     const email = contact.email || '';
     const phone = contact.phone || '';

@@ -1,15 +1,8 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { useTheme } from './ThemeContext.jsx';
-
-const BackgroundContext = createContext();
-
-export const useBackground = () => {
-  const context = useContext(BackgroundContext);
-  if (!context) {
-    throw new Error('useBackground must be used within a BackgroundProvider');
-  }
-  return context;
-};
+import { useEffect, useState } from 'react';
+import { BACKGROUND_STORAGE_KEY, DEFAULT_BACKGROUND } from '../constants/backgrounds.js';
+import { useContext } from 'react';
+import { ThemeContext } from './contexts.js';
+import { BackgroundContext } from './contexts.js';
 
 const DEFAULT_BACKGROUNDS = {
   light: {
@@ -252,10 +245,11 @@ const ALL_BACKGROUNDS = {
 };
 
 export const BackgroundProvider = ({ children }) => {
-  const { theme } = useTheme();
+  const themeContext = useContext(ThemeContext);
+  const theme = themeContext?.theme || 'light';
   const [background, setBackground] = useState(() => {
     // Load saved background from localStorage
-    const savedBackground = localStorage.getItem('tria-background');
+    const savedBackground = localStorage.getItem(BACKGROUND_STORAGE_KEY);
     if (savedBackground) {
       try {
         return JSON.parse(savedBackground);
@@ -289,7 +283,7 @@ export const BackgroundProvider = ({ children }) => {
         setBackground(defaultBg);
       }
     }
-  }, [theme]); // Only depend on theme changes
+  }, [theme, background.id]); // Depend on theme and background.id changes
 
   // Apply background to document and save to localStorage
   useEffect(() => {
@@ -317,7 +311,7 @@ export const BackgroundProvider = ({ children }) => {
       }
 
       // Save to localStorage
-      localStorage.setItem('tria-background', JSON.stringify(background));
+      localStorage.setItem(BACKGROUND_STORAGE_KEY, JSON.stringify(background));
     };
 
     applyBackground();

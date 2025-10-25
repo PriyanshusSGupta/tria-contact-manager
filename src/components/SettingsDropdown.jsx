@@ -4,8 +4,7 @@ import { Settings, Upload, Image, X } from 'lucide-react';
 
 function SettingsDropdown({ 
   onImportExport, 
-  onBackgroundSelector, 
-  onClose 
+  onBackgroundSelector
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);

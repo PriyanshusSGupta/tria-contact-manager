@@ -1,0 +1,176 @@
+/* Settings Button */
+.settings-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 10px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.settings-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 123, 255, 0.1) 0%,
+    rgba(0, 123, 255, 0.05) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.settings-button:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+.settings-button:hover::before {
+  opacity: 1;
+}
+
+.settings-button.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+}
+
+.settings-button.active::before {
+  opacity: 0;
+}
+
+/* Settings Icon Animation */
+.settings-icon {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.settings-button:hover .settings-icon {
+  transform: rotate(45deg);
+}
+
+.settings-icon.spinning {
+  animation: settingsRotate 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes settingsRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Reverse animation when closing */
+.settings-button:not(.active) .settings-icon.spinning {
+  animation: settingsRotateReverse 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes settingsRotateReverse {
+  0% {
+    transform: rotate(360deg);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Pulse effect when active */
+.settings-button.active {
+  animation: settingsPulse 2s infinite;
+}
+
+@keyframes settingsPulse {
+  0%, 100% {
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5), 0 0 0 4px rgba(0, 123, 255, 0.1);
+  }
+}
+
+/* Focus styles for accessibility */
+.settings-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary), 0 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+.settings-button.active:focus {
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3), 0 0 0 2px white, 0 0 0 4px var(--primary);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .settings-button {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .settings-icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .settings-button {
+  background: var(--bg-secondary);
+  border-color: var(--border-primary);
+}
+
+[data-theme="dark"] .settings-button:hover {
+  background: var(--bg-tertiary);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+[data-theme="dark"] .settings-button.active {
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .settings-button,
+  .settings-icon {
+    transition: none;
+  }
+  
+  .settings-icon.spinning {
+    animation: none;
+  }
+  
+  .settings-button.active {
+    animation: none;
+  }
+  
+  .settings-button:hover {
+    transform: none;
+  }
+  
+  .settings-button:hover .settings-icon {
+    transform: none;
+  }
+}

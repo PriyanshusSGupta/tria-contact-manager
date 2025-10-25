@@ -1,9 +1,9 @@
-import { useTheme } from '../contexts/ThemeContext.jsx';
+import { useTheme } from '../hooks/useTheme.js';
 import './ThemeToggle.css';
 import { Sun, Moon } from 'lucide-react';
 
 function ThemeToggle() {
-  const { theme, toggleTheme, isDark } = useTheme();
+  const { toggleTheme, isDark } = useTheme();
 
   return (
     <button 

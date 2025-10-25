@@ -3,7 +3,7 @@ import './AddContactForm.css';
 import TagSelector from './TagSelector.jsx';
 import ImageUpload from './ImageUpload.jsx';
 
-function AddContactForm({ onAddContact, onCancel, availableTags, onTagsChange, onManageTags }) {
+function AddContactForm({ onAddContact, onCancel, availableTags, onManageTags }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',

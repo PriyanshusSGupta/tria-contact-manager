@@ -32,7 +32,7 @@ export const csvUtils = {
       throw new Error('CSV file must have at least a header row and one data row');
     }
 
-    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+    // const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
     const contacts = [];
 
     for (let i = 1; i < lines.length; i++) {

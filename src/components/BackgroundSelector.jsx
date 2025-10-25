@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTheme } from '../contexts/ThemeContext.jsx';
+import { useTheme } from '../hooks/useTheme.js';
 import './BackgroundSelector.css';
 
 // Theme-aware background definitions

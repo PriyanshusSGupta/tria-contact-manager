@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { CheckCircle, AlertCircle, XCircle, Info, X } from 'lucide-react';
 import './Toast.css';
 
@@ -12,6 +12,13 @@ function Toast({ message, type = 'success', duration = 4000, onClose }) {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleClose = useCallback(() => {
+    setIsExiting(true);
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  }, [onClose]);
+
   useEffect(() => {
     if (duration > 0) {
       const timer = setTimeout(() => {
@@ -19,14 +26,7 @@ function Toast({ message, type = 'success', duration = 4000, onClose }) {
       }, duration);
       return () => clearTimeout(timer);
     }
-  }, [duration]);
-
-  const handleClose = () => {
-    setIsExiting(true);
-    setTimeout(() => {
-      onClose();
-    }, 300);
-  };
+  }, [duration, handleClose]);
 
   const getIcon = () => {
     switch (type) {

@@ -34,7 +34,7 @@ function AdvancedUIDemo() {
   return (
     <div className="advanced-ui-demo">
       <BackgroundPattern pattern={selectedPattern} opacity={0.03} />
-      
+
       <div className="demo-header">
         <h1>🎨 Advanced UI Components</h1>
         <p>Showcase of professional UI components and interactions</p>
@@ -45,20 +45,20 @@ function AdvancedUIDemo() {
         <div className="demo-section">
           <h2>Progress Indicators</h2>
           <div className="progress-demos">
-            <ProgressBar 
-              progress={progress} 
+            <ProgressBar
+              progress={progress}
               label="File Upload Progress"
               variant="primary"
               size="medium"
             />
-            <ProgressBar 
-              progress={75} 
+            <ProgressBar
+              progress={75}
               label="Profile Completion"
               variant="success"
               size="small"
             />
-            <ProgressBar 
-              progress={45} 
+            <ProgressBar
+              progress={45}
               label="Storage Usage"
               variant="warning"
               size="large"
@@ -71,19 +71,19 @@ function AdvancedUIDemo() {
           <h2>Loading Spinners</h2>
           <div className="spinner-demos">
             <LoadingSpinner size="small" variant="primary" />
-            <LoadingSpinner 
-              size="medium" 
-              variant="success" 
+            <LoadingSpinner
+              size="medium"
+              variant="success"
               showPercentage={true}
               percentage={Math.round(progress)}
             />
-            <LoadingSpinner 
-              size="large" 
-              variant="secondary" 
+            <LoadingSpinner
+              size="large"
+              variant="secondary"
               label="Processing..."
             />
           </div>
-          <button 
+          <button
             className="demo-button"
             onClick={handleStartLoading}
           >
@@ -121,7 +121,7 @@ function AdvancedUIDemo() {
         {/* Welcome Screen Section */}
         <div className="demo-section">
           <h2>Onboarding Experience</h2>
-          <button 
+          <button
             className="demo-button primary"
             onClick={() => setShowWelcome(true)}
           >
@@ -178,7 +178,7 @@ function AdvancedUIDemo() {
 
       {/* Loading Overlay */}
       {isLoading && (
-        <LoadingSpinner 
+        <LoadingSpinner
           overlay={true}
           size="large"
           variant="primary"

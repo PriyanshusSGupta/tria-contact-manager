@@ -1,0 +1,126 @@
+/* Settings Dropup (Modified to Notion Style, preserving variables) */
+.settings-dropup {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+
+  /* --- KEY NOTION AESTHETICS --- */
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  box-shadow:
+    0 -8px 25px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+
+  padding: 6px 0;
+  margin-bottom: 8px;
+  min-width: 220px;
+  /* ----------------------------- */
+
+  z-index: 9999;
+  /* Very high z-index to appear on top of everything */
+  animation: dropupSlideIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dropupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Dropdown Items */
+.dropup-item {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center;  */
+  padding: 6px 14px;
+  border-radius: 3px;
+  margin-bottom: 0;
+  cursor: pointer;
+  transition: background-color 100ms ease-in-out;
+}
+
+
+.dropup-item:last-child {
+  margin-bottom: 0;
+}
+
+
+.dropup-item:hover,
+.dropup-item.highlighted {
+  background: var(--bg-secondary);
+}
+
+/* Item Content (Icon and Text) */
+.item-content {
+  display: flex;
+  flex-direction: row;
+  /* align-items: flex-start;  */
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+
+.item-content svg {
+  color: var(--text-secondary);
+  width: 16px;
+  height: 16px;
+}
+
+
+/* Theme toggle alignment fix */
+.dropup-item .theme-toggle {
+  /* Pushes the ThemeToggle component to the far right */
+  margin-left: auto;
+  margin-right: 0;
+}
+
+
+/* Dark theme overrides */
+[data-theme="dark"] .settings-dropup {
+  background: var(--bg-primary);
+  border-color: var(--border-primary);
+
+  box-shadow:
+    0 4px 12px 0 rgba(0, 0, 0, 0.3),
+    0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Adjust position when sidebar is collapsed to prevent cutoff */
+.sidebar.collapsed .settings-dropup {
+  /* Move left to show full dropdown */
+  left: auto;
+  min-width: 200px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .settings-dropup {
+    min-width: 160px;
+    padding: 4px 0;
+  }
+
+  .dropup-item {
+    padding: 6px 10px;
+  }
+
+  .item-content {
+    font-size: 13px;
+  }
+
+  /* On mobile, keep normal positioning */
+  .sidebar.collapsed .settings-dropup {
+    left: -140px;
+    min-width: 180px;
+  }
+}
